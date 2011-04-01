@@ -45,7 +45,7 @@ public class StationUtil {
 			return false;
 		}
 		if (isStationIntersectionPrompt()) {
-			if (ControlBlockList.isValidStationBlock(minecart.getBlockBeneath())) {
+			if (!ControlBlockList.isValidStationBlock(minecart.getBlockBeneath())) {
 				return false;
 			}
 		}

@@ -1,4 +1,5 @@
 name: Minecart Mania Station
 main: com.afforess.minecartmaniastation.MinecartManiaStation
-version: 1.05
+version: 1.07
 author: Afforess
+depend: [Minecart Mania Core]
