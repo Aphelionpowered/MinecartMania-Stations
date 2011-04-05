@@ -9,7 +9,7 @@ public enum StationDirection implements Direction {
 		@Override
 		public CompassDirection direction(MinecartManiaMinecart minecart, String str) {
 			if (str.equals("STR") || str.toLowerCase().contains("straight"))
-				return minecart.getPreviousFacingDir();
+				return minecart.getDirection();
 			return CompassDirection.NO_DIRECTION;
 		}
 	},
@@ -49,7 +49,7 @@ public enum StationDirection implements Direction {
 		@Override
 		public CompassDirection direction(MinecartManiaMinecart minecart, String str) {
 			if (str.equals("L") || str.toLowerCase().contains("left"))
-				return DirectionUtils.getLeftDirection(minecart.getPreviousFacingDir());
+				return DirectionUtils.getLeftDirection(minecart.getDirection());
 			return CompassDirection.NO_DIRECTION;
 		}
 	},
@@ -57,7 +57,7 @@ public enum StationDirection implements Direction {
 		@Override
 		public CompassDirection direction(MinecartManiaMinecart minecart, String str) {
 			if (str.equals("R") || str.toLowerCase().contains("right"))
-				return DirectionUtils.getRightDirection(minecart.getPreviousFacingDir());
+				return DirectionUtils.getRightDirection(minecart.getDirection());
 			return CompassDirection.NO_DIRECTION;
 		}
 	},

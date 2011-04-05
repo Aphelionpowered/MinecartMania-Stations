@@ -86,7 +86,7 @@ public class MinecartActionListener extends MinecartManiaListener{
 			minecart.stopCart();
 			Player passenger = minecart.getPlayerPassenger();
 			//set the track straight
-			int data = DirectionUtils.getMinetrackRailDataForDirection(minecart.getPreviousFacingDir(), minecart.getPreviousFacingDir());
+			int data = DirectionUtils.getMinetrackRailDataForDirection(minecart.getDirection(), minecart.getDirection());
 			Block oldBlock = MinecartManiaWorld.getBlockAt(minecart.minecart.getWorld(), minecart.getX(), minecart.getY(), minecart.getZ());
 			ArrayList<Integer> blockData = new ArrayList<Integer>();
 			blockData.add(new Integer(oldBlock.getX()));
@@ -142,7 +142,7 @@ public class MinecartActionListener extends MinecartManiaListener{
 		//responding to chat direction prompt
 		if (minecart.isAtIntersection() && minecart.hasPlayerPassenger()) {
 			if (StationUtil.isValidDirection(facingDir, minecart)) {
-				int data = DirectionUtils.getMinetrackRailDataForDirection(facingDir, minecart.getPreviousFacingDir());
+				int data = DirectionUtils.getMinetrackRailDataForDirection(facingDir, minecart.getDirection());
 				if (data != -1) {
 					MinecartManiaWorld.setBlockData(minecart.minecart.getWorld(), minecart.getX(), minecart.getY(), minecart.getZ(), data);
 				}

@@ -77,7 +77,7 @@ public class SignCommands {
 						handled = true;
 					}
 					else if (MinecartUtils.validMinecartTrack(minecart.minecart.getWorld(), minecart.getX(), minecart.getY(), minecart.getZ(), 2, direction)) {
-						int data = DirectionUtils.getMinetrackRailDataForDirection(direction, minecart.getPreviousFacingDir());
+						int data = DirectionUtils.getMinetrackRailDataForDirection(direction, minecart.getDirection());
 						if (data != -1) {
 							handled = true;
 							
@@ -93,7 +93,7 @@ public class SignCommands {
 							//change the track dirtion
 							MinecartManiaWorld.setBlockData(minecart.minecart.getWorld(), minecart.getX(), minecart.getY(), minecart.getZ(), data);
 						}
-						else if (DirectionUtils.getOppositeDirection(direction).equals(minecart.getPreviousFacingDir())) {
+						else if (DirectionUtils.getOppositeDirection(direction).equals(minecart.getDirection())) {
 							//format the sign
 							minecart.reverse();
 							handled = true;

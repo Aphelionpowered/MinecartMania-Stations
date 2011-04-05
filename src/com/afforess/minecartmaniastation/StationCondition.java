@@ -1,5 +1,6 @@
 package com.afforess.minecartmaniastation;
 
+import com.afforess.minecartmaniacore.AbstractItem;
 import com.afforess.minecartmaniacore.Item;
 import com.afforess.minecartmaniacore.MinecartManiaMinecart;
 import com.afforess.minecartmaniacore.MinecartManiaStorageCart;
@@ -93,17 +94,17 @@ public enum StationCondition implements Condition{
 		public boolean result(MinecartManiaMinecart minecart, String str) {
 			if (minecart.hasPlayerPassenger() && minecart.getPlayerPassenger().getItemInHand() != null) {
 				Item itemInHand = Item.getItem(minecart.getPlayerPassenger().getItemInHand().getTypeId(), minecart.getPlayerPassenger().getItemInHand().getDurability());
-				Item[] signData = ItemUtils.getItemStringToMaterial(str);
-				for (Item item : signData) {
+				AbstractItem[] signData = ItemUtils.getItemStringToMaterial(str);
+				for (AbstractItem item : signData) {
 					if (item != null && item.equals(itemInHand)) {
 						return true;
 					}
 				}		
 			}
 			else if (minecart.isStorageMinecart()) {
-				Item[] signData = ItemUtils.getItemStringToMaterial(str);
-				for (Item item : signData) {
-					if (item != null && (((MinecartManiaStorageCart)minecart).amount(item) > (item.isInfinite() ? 0 : item.getAmount()))) {
+				AbstractItem[] signData = ItemUtils.getItemStringToMaterial(str);
+				for (AbstractItem item : signData) {
+					if (item != null && (((MinecartManiaStorageCart)minecart).amount(item.type()) > (item.isInfinite() ? 0 : item.getAmount()))) {
 						return true;
 					}
 				}	
@@ -132,25 +133,25 @@ public enum StationCondition implements Condition{
 	West {
 		@Override
 		public boolean result(MinecartManiaMinecart minecart, String str) {
-			return (str.equals("W") || str.toLowerCase().contains("west")) && minecart.getPreviousFacingDir() == CompassDirection.WEST;
+			return (str.equals("W") || str.toLowerCase().contains("west")) && minecart.getDirection() == CompassDirection.WEST;
 		}
 	},
 	East {
 		@Override
 		public boolean result(MinecartManiaMinecart minecart, String str) {
-			return (str.equals("E") || str.toLowerCase().contains("east")) && minecart.getPreviousFacingDir() == CompassDirection.EAST;
+			return (str.equals("E") || str.toLowerCase().contains("east")) && minecart.getDirection() == CompassDirection.EAST;
 		}
 	},
 	North {
 		@Override
 		public boolean result(MinecartManiaMinecart minecart, String str) {
-			return (str.equals("N") || str.toLowerCase().contains("north")) && minecart.getPreviousFacingDir() == CompassDirection.NORTH;
+			return (str.equals("N") || str.toLowerCase().contains("north")) && minecart.getDirection() == CompassDirection.NORTH;
 		}
 	},
 	South {
 		@Override
 		public boolean result(MinecartManiaMinecart minecart, String str) {
-			return (str.equals("S") || str.toLowerCase().contains("south")) && minecart.getPreviousFacingDir() == CompassDirection.SOUTH;
+			return (str.equals("S") || str.toLowerCase().contains("south")) && minecart.getDirection() == CompassDirection.SOUTH;
 		}
 	},
 	Redstone {
