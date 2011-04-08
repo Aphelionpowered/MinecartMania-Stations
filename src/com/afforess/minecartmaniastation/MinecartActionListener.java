@@ -2,17 +2,16 @@ package com.afforess.minecartmaniastation;
 
 import java.util.ArrayList;
 
-import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import com.afforess.minecartmaniacore.utils.ChatUtils;
 import com.afforess.minecartmaniacore.utils.DirectionUtils;
 import com.afforess.minecartmaniacore.utils.DirectionUtils.CompassDirection;
 import com.afforess.minecartmaniacore.MinecartManiaMinecart;
 import com.afforess.minecartmaniacore.MinecartManiaWorld;
 import com.afforess.minecartmaniacore.config.ControlBlockList;
+import com.afforess.minecartmaniacore.config.LocaleParser;
 import com.afforess.minecartmaniacore.event.MinecartActionEvent;
 import com.afforess.minecartmaniacore.event.MinecartClickedEvent;
 import com.afforess.minecartmaniacore.event.MinecartIntersectionEvent;
@@ -97,7 +96,7 @@ public class MinecartActionListener extends MinecartManiaListener{
 			if (data != -1) {
 				MinecartManiaWorld.setBlockData(minecart.minecart.getWorld(), minecart.getX(), minecart.getY(), minecart.getZ(), data);
 			}
-			ChatUtils.sendMultilineMessage(passenger, "Tap your minecart in the desired direction", ChatColor.YELLOW.toString());
+			passenger.sendMessage(LocaleParser.getTextKey("StationsTapInDirection"));
 		}
 		
 	}

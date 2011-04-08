@@ -2,11 +2,10 @@ package com.afforess.minecartmaniastation;
 
 import java.util.ArrayList;
 
-import org.bukkit.ChatColor;
 import org.bukkit.util.Vector;
 
 import com.afforess.minecartmaniacore.config.ControlBlockList;
-import com.afforess.minecartmaniacore.utils.ChatUtils;
+import com.afforess.minecartmaniacore.config.LocaleParser;
 import com.afforess.minecartmaniacore.utils.DirectionUtils;
 import com.afforess.minecartmaniacore.utils.MinecartUtils;
 import com.afforess.minecartmaniacore.utils.DirectionUtils.CompassDirection;
@@ -160,9 +159,8 @@ public class StationUtil {
 		}
 		if (restricted.contains(facingDir)){
 			if (minecart.hasPlayerPassenger()) {
-				ChatUtils.sendMultilineMessage(minecart.getPlayerPassenger(), "Not a valid direction.", ChatColor.RED.toString());
-				String valid = "You can go " + StationUtil.buildValidDirectionString(restricted);
-				ChatUtils.sendMultilineMessage(minecart.getPlayerPassenger(), valid, ChatColor.YELLOW.toString());
+				minecart.getPlayerPassenger().sendMessage(LocaleParser.getTextKey("StationsInvalidDirection"));
+				minecart.getPlayerPassenger().sendMessage(LocaleParser.getTextKey("StationsValidDirections", StationUtil.buildValidDirectionString(restricted)));
 				return false;
 			}
 		}
