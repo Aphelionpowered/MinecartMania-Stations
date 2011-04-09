@@ -12,7 +12,7 @@ public enum StationCondition implements Condition{
 	Default {
 		@Override
 		public boolean result(MinecartManiaMinecart minecart, String str) {
-			return str.toLowerCase().contains("default");
+			return str.equals("D") || str.toLowerCase().contains("default");
 		}
 	},
 	Empty {
