@@ -117,24 +117,25 @@ public class SignCommands {
 		if (!str.toLowerCase().contains("st-")) {
 			return false;
 		}
-		String[] val = str.toLowerCase().split(":");
-		String[] keys = val[0].split("-| ?: ?");
-		String st = keys[1];
-		String stp = st; //st pattern
+		String[] val = str.toLowerCase().split(":"); //Will doing a toLowerCase here mess up regular expressions?  Probably not since we lower case the station name anyway.
+		String[] keys = val[0].split("-| ?: ?", 2);  //Split the st- from the station name. the ",2" limits it to the first "-" followed by zero or one non-capturing spaces.
+		                                             //The ",2" is needed because regular expressions can have a "-" in them. example "st-[g-z].*"
+		                                             //Without the limit, we would have the following array in keys: "st", "[g", "z].*" and then only work with the "[g" portion which is wrong.
+		String st = keys[1];                         //Get the station name/simple pattern/regular expression
 		String station = MinecartManiaWorld.getMinecartManiaPlayer(minecart.getPlayerPassenger()).getLastStation().toLowerCase();
 		int parseSetting = MinecartManiaWorld.getIntValue(MinecartManiaWorld.getConfigurationValue("StationSignParsingMethod"));
 		switch(parseSetting){
 			case 0: //default with no pattern matching
 				valid = station.equalsIgnoreCase(st);break;
 			case 1: //simple pattern matching
-				stp = stp.replace("\\", "\\\\") //escapes backslashes in case people use them in station names
+				st = st.replace("\\", "\\\\") //escapes backslashes in case people use them in station names
 				.replace(".", "\\.") //escapes period
 				.replace("*", ".*") //converts *
 				.replace("?", ".") //converts ?
 				.replace("#", "\\d") //converts #
-				.replace("@", "[a-zA-Z]"); //converts @
+				.replace("@", "[a-zA-Z]"); //converts @  NOTE:[A-Z] is probably not needed here since everything is lower case anyway, but left for completeness.
 			case 2: //full regex //note the lack of break before this, case 1 comes down here after converting
-				valid = station.matches(stp); break;
+				valid = station.matches(st); break;
 		}
 		if (valid && MinecartManiaWorld.getMinecartManiaPlayer(minecart.getPlayerPassenger()).getDataValue("Reset Station Data") == null) {
 			if (!StationUtil.isStationCommandNeverResets()) {
