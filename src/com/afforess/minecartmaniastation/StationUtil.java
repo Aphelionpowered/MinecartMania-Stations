@@ -15,22 +15,19 @@ import com.afforess.minecartmaniacore.world.MinecartManiaWorld;
 public class StationUtil {
 
 	public static boolean isPromptUserAtAnyIntersection() {
-		return MinecartManiaWorld.getIntValue(MinecartManiaWorld.getConfigurationValue("IntersectionPrompts")) == 0;
+		return (Integer)MinecartManiaWorld.getConfigurationValue("IntersectionPrompts") == 0;
 	}
 	
 	public static boolean isStationIntersectionPrompt() {
-		return MinecartManiaWorld.getIntValue(MinecartManiaWorld.getConfigurationValue("IntersectionPrompts")) == 1;
+		return (Integer)MinecartManiaWorld.getConfigurationValue("IntersectionPrompts") == 1;
 	}
 	
 	public static boolean isNeverIntersectionPrompt() {
-		return MinecartManiaWorld.getIntValue(MinecartManiaWorld.getConfigurationValue("IntersectionPrompts")) == 2;
+		return (Integer)MinecartManiaWorld.getConfigurationValue("IntersectionPrompts") == 2;
 	}
 	
 	public static boolean isStationCommandNeverResets() {
-		if (MinecartManiaWorld.getConfigurationValue("StationCommandSavesAfterUse") != null) {
-			return (Boolean)MinecartManiaWorld.getConfigurationValue("StationCommandSavesAfterUse");
-		}
-		return false;
+		return (Boolean)MinecartManiaWorld.getConfigurationValue("StationCommandSavesAfterUse");
 	}
 	
 	public static boolean shouldPromptUser(MinecartManiaMinecart minecart) {

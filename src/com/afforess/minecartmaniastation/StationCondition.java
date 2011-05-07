@@ -133,25 +133,25 @@ public enum StationCondition implements Condition{
 	West {
 		@Override
 		public boolean result(MinecartManiaMinecart minecart, String str) {
-			return (str.equals("W") || str.toLowerCase().contains("west")) && minecart.getDirection() == CompassDirection.WEST;
+			return (str.equals("W") || str.toLowerCase().contains("west")) && !str.contains("-") && minecart.getDirection() == CompassDirection.WEST;
 		}
 	},
 	East {
 		@Override
 		public boolean result(MinecartManiaMinecart minecart, String str) {
-			return (str.equals("E") || str.toLowerCase().contains("east")) && minecart.getDirection() == CompassDirection.EAST;
+			return (str.equals("E") || str.toLowerCase().contains("east")) && !str.contains("-") && minecart.getDirection() == CompassDirection.EAST;
 		}
 	},
 	North {
 		@Override
 		public boolean result(MinecartManiaMinecart minecart, String str) {
-			return (str.equals("N") || str.toLowerCase().contains("north")) && minecart.getDirection() == CompassDirection.NORTH;
+			return (str.equals("N") || str.toLowerCase().contains("north")) && !str.contains("-") && minecart.getDirection() == CompassDirection.NORTH;
 		}
 	},
 	South {
 		@Override
 		public boolean result(MinecartManiaMinecart minecart, String str) {
-			return (str.equals("S") || str.toLowerCase().contains("south")) && minecart.getDirection() == CompassDirection.SOUTH;
+			return (str.equals("S") || str.toLowerCase().contains("south")) && !str.contains("-") && minecart.getDirection() == CompassDirection.SOUTH;
 		}
 	},
 	Redstone {

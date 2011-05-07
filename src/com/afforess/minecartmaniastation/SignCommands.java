@@ -123,7 +123,7 @@ public class SignCommands {
 		                                             //Without the limit, we would have the following array in keys: "st", "[g", "z].*" and then only work with the "[g" portion which is wrong.
 		String st = keys[1];                         //Get the station name/simple pattern/regular expression
 		String station = MinecartManiaWorld.getMinecartManiaPlayer(minecart.getPlayerPassenger()).getLastStation().toLowerCase();
-		int parseSetting = MinecartManiaWorld.getIntValue(MinecartManiaWorld.getConfigurationValue("StationSignParsingMethod"));
+		int parseSetting = (Integer)MinecartManiaWorld.getConfigurationValue("StationSignParsingMethod");
 		switch(parseSetting){
 			case 0: //default with no pattern matching
 				valid = station.equalsIgnoreCase(st);break;
