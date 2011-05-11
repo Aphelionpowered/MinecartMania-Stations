@@ -6,18 +6,22 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import com.afforess.minecartmaniacore.signs.Sign;
 import com.afforess.minecartmaniacore.utils.DirectionUtils;
 import com.afforess.minecartmaniacore.utils.DirectionUtils.CompassDirection;
+import com.afforess.minecartmaniacore.utils.StringUtils;
 import com.afforess.minecartmaniacore.minecart.MinecartManiaMinecart;
 import com.afforess.minecartmaniacore.world.MinecartManiaWorld;
 import com.afforess.minecartmaniacore.config.ControlBlockList;
 import com.afforess.minecartmaniacore.config.LocaleParser;
+import com.afforess.minecartmaniacore.entity.MinecartManiaPlayer;
 import com.afforess.minecartmaniacore.event.MinecartActionEvent;
 import com.afforess.minecartmaniacore.event.MinecartClickedEvent;
 import com.afforess.minecartmaniacore.event.MinecartIntersectionEvent;
 import com.afforess.minecartmaniacore.event.MinecartLaunchedEvent;
 import com.afforess.minecartmaniacore.event.MinecartManiaListener;
 import com.afforess.minecartmaniacore.event.MinecartManiaMinecartDestroyedEvent;
+import com.afforess.minecartmaniacore.event.MinecartMeetsConditionEvent;
 import com.afforess.minecartmaniacore.event.MinecartMotionStartEvent;
 
 public class MinecartActionListener extends MinecartManiaListener{
@@ -149,6 +153,31 @@ public class MinecartActionListener extends MinecartManiaListener{
 				minecart.setDataValue("preintersection velocity", null);
 			}
 			event.setActionTaken(true);
+		}
+	}
+	
+	public void onMinecartMeetConditionEvent(MinecartMeetsConditionEvent event) {
+		if (event.isMeetCondition()) {
+			return;
+		}
+		Sign sign = event.getSign();
+		MinecartManiaMinecart minecart = event.getMinecart();
+		MinecartManiaPlayer player = null;
+		if (minecart.hasPlayerPassenger()) {
+			player = MinecartManiaWorld.getMinecartManiaPlayer(minecart.getPlayerPassenger());
+			player.setDataValue("Reset Station Data", true);
+		}
+loop:	for (int i = 0; i < sign.getNumLines(); i++) {
+			String line = StringUtils.removeBrackets(sign.getLine(i).trim()); 
+			for (StationCondition e : StationCondition.values()) {
+				if (e.result(minecart, line)) {
+					event.setMeetCondition(true);
+					break loop;
+				}
+			}
+		}
+		if (player != null) {
+			player.setDataValue("Reset Station Data", null);
 		}
 	}
 }
