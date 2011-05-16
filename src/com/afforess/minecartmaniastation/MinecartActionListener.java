@@ -163,8 +163,10 @@ public class MinecartActionListener extends MinecartManiaListener{
 		Sign sign = event.getSign();
 		MinecartManiaMinecart minecart = event.getMinecart();
 		MinecartManiaPlayer player = null;
+		Object old = null;
 		if (minecart.hasPlayerPassenger()) {
 			player = MinecartManiaWorld.getMinecartManiaPlayer(minecart.getPlayerPassenger());
+			old = player.getDataValue("Reset Station Data");
 			player.setDataValue("Reset Station Data", true);
 		}
 loop:	for (int i = 0; i < sign.getNumLines(); i++) {
@@ -177,7 +179,7 @@ loop:	for (int i = 0; i < sign.getNumLines(); i++) {
 			}
 		}
 		if (player != null) {
-			player.setDataValue("Reset Station Data", null);
+			player.setDataValue("Reset Station Data", old);
 		}
 	}
 }

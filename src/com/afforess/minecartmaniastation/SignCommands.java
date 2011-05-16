@@ -7,6 +7,7 @@ import org.bukkit.block.Sign;
 
 import com.afforess.minecartmaniacore.minecart.MinecartManiaMinecart;
 import com.afforess.minecartmaniacore.world.MinecartManiaWorld;
+import com.afforess.minecartmaniacore.debug.MinecartManiaLogger;
 import com.afforess.minecartmaniacore.event.MinecartEvent;
 import com.afforess.minecartmaniacore.event.MinecartLaunchedEvent;
 import com.afforess.minecartmaniacore.utils.DirectionUtils;
@@ -114,6 +115,7 @@ public class SignCommands {
 
 	protected static boolean processStationCommand(MinecartManiaMinecart minecart, String str) {
 		boolean valid = false;
+		
 		if (!str.toLowerCase().contains("st-")) {
 			return false;
 		}
@@ -124,6 +126,7 @@ public class SignCommands {
 		String st = keys[1];                         //Get the station name/simple pattern/regular expression
 		String station = MinecartManiaWorld.getMinecartManiaPlayer(minecart.getPlayerPassenger()).getLastStation().toLowerCase();
 		int parseSetting = (Integer)MinecartManiaWorld.getConfigurationValue("StationSignParsingMethod");
+		MinecartManiaLogger.getInstance().debug("Given Sign Line: " + str + " Given Station setting: " + station);
 		switch(parseSetting){
 			case 0: //default with no pattern matching
 				valid = station.equalsIgnoreCase(st);break;
