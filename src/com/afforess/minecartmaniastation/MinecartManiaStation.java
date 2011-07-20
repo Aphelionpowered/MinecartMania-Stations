@@ -25,7 +25,7 @@ public class MinecartManiaStation extends JavaPlugin{
 	public void onEnable() {
 		server = this.getServer();
 		description = this.getDescription();
-		MinecartManiaConfigurationParser.read(description.getName() + "Configuration.xml", MinecartManiaCore.dataDirectory, new StationSettingParser());
+		MinecartManiaConfigurationParser.read(description.getName() + "Configuration.xml", MinecartManiaCore.getDataDirectoryRelativePath(), new StationSettingParser());
 		getServer().getPluginManager().registerEvent(Event.Type.CUSTOM_EVENT, listener, Priority.Normal, this);
 		log.info( description.getName() + " version " + description.getVersion() + " is enabled!" );
 	}
