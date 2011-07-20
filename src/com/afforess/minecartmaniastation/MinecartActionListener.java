@@ -74,13 +74,9 @@ public class MinecartActionListener extends MinecartManiaListener{
 		if (event.isActionTaken()) {
 			return;
 		}
-		
+
 		if (ControlBlockList.isValidStationBlock(minecart)) {
 			SignCommands.processStation(event);
-		}
-		
-		if (event.isActionTaken()) {
-			return;
 		}
 		
 		if (StationUtil.shouldPromptUser(minecart)) {
