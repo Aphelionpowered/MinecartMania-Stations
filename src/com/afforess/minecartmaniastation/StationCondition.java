@@ -158,5 +158,9 @@ public enum StationCondition implements Condition {
         public boolean result(MinecartManiaMinecart minecart, String str) {
             return str.toLowerCase().contains("redstone") && (minecart.isPoweredBeneath() || MinecartManiaWorld.isBlockIndirectlyPowered(minecart.minecart.getWorld(), minecart.getX(), minecart.getY() - 2, minecart.getZ()));
         }
+    };
+    
+    public boolean result(MinecartManiaMinecart minecart, String str) {
+        return false;
     }
 }
