@@ -6,7 +6,7 @@ import com.afforess.minecartmaniacore.utils.DirectionUtils.CompassDirection;
 
 public enum StationDirection implements Direction {
 	Straight {
-		
+		@Override
 		public CompassDirection direction(MinecartManiaMinecart minecart, String str) {
 			if (str.equals("STR") || str.toLowerCase().contains("straight"))
 				return minecart.getDirection();
@@ -14,7 +14,7 @@ public enum StationDirection implements Direction {
 		}
 	},
 	North {
-		
+        @Override
 		public CompassDirection direction(MinecartManiaMinecart minecart, String str) {
 			if (str.equals("N") || str.toLowerCase().contains("north"))
 				return CompassDirection.NORTH;
@@ -22,7 +22,7 @@ public enum StationDirection implements Direction {
 		}
 	},
 	East {
-		
+        @Override
 		public CompassDirection direction(MinecartManiaMinecart minecart, String str) {
 			if (str.equals("E") || str.toLowerCase().contains("east"))
 				return CompassDirection.EAST;
@@ -30,7 +30,7 @@ public enum StationDirection implements Direction {
 		}
 	},
 	South {
-		
+        @Override
 		public CompassDirection direction(MinecartManiaMinecart minecart, String str) {
 			if (str.equals("S") || str.toLowerCase().contains("south"))
 				return CompassDirection.SOUTH;
@@ -38,7 +38,7 @@ public enum StationDirection implements Direction {
 		}
 	},
 	West {
-		
+        @Override
 		public CompassDirection direction(MinecartManiaMinecart minecart, String str) {
 			if (str.equals("W") || str.toLowerCase().contains("west"))
 				return CompassDirection.WEST;
@@ -46,7 +46,7 @@ public enum StationDirection implements Direction {
 		}
 	},
 	Left {
-		
+        @Override
 		public CompassDirection direction(MinecartManiaMinecart minecart, String str) {
 			if (str.equals("L") || str.toLowerCase().contains("left"))
 				return DirectionUtils.getLeftDirection(minecart.getDirection());
@@ -54,7 +54,7 @@ public enum StationDirection implements Direction {
 		}
 	},
 	Right {
-		
+        @Override
 		public CompassDirection direction(MinecartManiaMinecart minecart, String str) {
 			if (str.equals("R") || str.toLowerCase().contains("right"))
 				return DirectionUtils.getRightDirection(minecart.getDirection());
@@ -62,7 +62,8 @@ public enum StationDirection implements Direction {
 		}
 	},
 	Destroy {
-		
+
+        @Override
 		public CompassDirection direction(MinecartManiaMinecart minecart, String str) {
 			if (str.equals("D") || str.toLowerCase().contains("destroy"))
 				return null;
@@ -70,7 +71,8 @@ public enum StationDirection implements Direction {
 		}
 	},
 	Prompt {
-		
+
+        @Override
 		public CompassDirection direction(MinecartManiaMinecart minecart, String str) {
 			if (str.equals("P") || str.toLowerCase().contains("prompt")) {
 				if (minecart.hasPlayerPassenger()) {
@@ -79,5 +81,10 @@ public enum StationDirection implements Direction {
 			}
 			return CompassDirection.NO_DIRECTION;
 		}
-	}
+	};
+	
+
+    public CompassDirection direction(MinecartManiaMinecart minecart, String str) {
+        return CompassDirection.NO_DIRECTION;
+    }
 }
