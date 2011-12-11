@@ -1,11 +1,14 @@
 package com.afforess.minecartmaniastation;
 
+import org.bukkit.inventory.ItemStack;
+
 import com.afforess.minecartmaniacore.world.AbstractItem;
 import com.afforess.minecartmaniacore.world.Item;
 import com.afforess.minecartmaniacore.minecart.MinecartManiaMinecart;
 import com.afforess.minecartmaniacore.minecart.MinecartManiaStorageCart;
 import com.afforess.minecartmaniacore.world.MinecartManiaWorld;
 import com.afforess.minecartmaniacore.utils.DirectionUtils.CompassDirection;
+import com.afforess.minecartmaniacore.utils.ItemMatcher;
 import com.afforess.minecartmaniacore.utils.ItemUtils;
 
 public enum StationCondition implements Condition {
@@ -89,22 +92,28 @@ public enum StationCondition implements Condition {
             return minecart.hasPlayerPassenger() && str.equalsIgnoreCase(minecart.getPlayerPassenger().getName());
         }
     },
-    ContainsItem {     
-        @Override 
+    ContainsItem {
+        @Override
         public boolean result(MinecartManiaMinecart minecart, String str) {
             if (minecart.hasPlayerPassenger() && minecart.getPlayerPassenger().getItemInHand() != null) {
-                Item itemInHand = Item.getItem(minecart.getPlayerPassenger().getItemInHand().getTypeId(), minecart.getPlayerPassenger().getItemInHand().getDurability());
-                AbstractItem[] signData = ItemUtils.getItemStringToMaterial(str);
-                for (AbstractItem item : signData) {
-                    if (item != null && item.equals(itemInHand)) {
+                ItemStack itemInHand = minecart.getPlayerPassenger().getItemInHand();
+                ItemMatcher[] signData = ItemUtils.getItemStringToMatchers(str, CompassDirection.NO_DIRECTION);
+                for (ItemMatcher matcher : signData) {
+                    if (matcher != null && matcher.match(itemInHand)) {
                         return true;
                     }
                 }
             } else if (minecart.isStorageMinecart()) {
-                AbstractItem[] signData = ItemUtils.getItemStringToMaterial(str);
-                for (AbstractItem item : signData) {
-                    if (item != null && (((MinecartManiaStorageCart) minecart).amount(item.type()) > (item.isInfinite() ? 0 : item.getAmount()))) {
-                        return true;
+                MinecartManiaStorageCart cart = ((MinecartManiaStorageCart) minecart);
+                ItemMatcher[] signData = ItemUtils.getItemStringToMatchers(str, CompassDirection.NO_DIRECTION);
+                for (ItemMatcher matcher : signData) {
+                    for (int i = 0; i < cart.size(); i++) {
+                        ItemStack item = cart.getItem(i);
+                        if (item != null && matcher.match(item)) {
+                            if (cart.amount(item.getTypeId(), item.getDurability()) > matcher.getAmount()) {
+                                return true;
+                            }
+                        }
                     }
                 }
             }
