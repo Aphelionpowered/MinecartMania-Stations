@@ -110,7 +110,7 @@ public enum StationCondition implements Condition {
                     for (int i = 0; i < cart.size(); i++) {
                         ItemStack item = cart.getItem(i);
                         if (item != null && matcher.match(item)) {
-                            if (cart.amount(item.getTypeId(), item.getDurability()) > matcher.getAmount()) {
+                            if (cart.amount(item.getTypeId(), item.getDurability()) > matcher.getAmount(-1)) {
                                 return true;
                             }
                         }
