@@ -1,8 +1,6 @@
 package com.afforess.minecartmaniastation;
 
 import org.bukkit.Server;
-import org.bukkit.event.Event;
-import org.bukkit.event.Event.Priority;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,7 +23,8 @@ public class MinecartManiaStation extends JavaPlugin {
         server = getServer();
         description = getDescription();
         MinecartManiaConfigurationParser.read(description.getName() + "Configuration.xml", MinecartManiaCore.getDataDirectoryRelativePath(), new StationSettingParser());
-        getServer().getPluginManager().registerEvent(Event.Type.CUSTOM_EVENT, listener, Priority.Normal, this);
+        getServer().getPluginManager().registerEvents(listener, this);
+        //        getServer().getPluginManager().registerEvent(Event.Type.CUSTOM_EVENT, listener, Priority.Normal, this);
         log.info(description.getName() + " version " + description.getVersion() + " is enabled!");
     }
 }
