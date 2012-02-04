@@ -22,18 +22,19 @@
 			<artifactId>minecartmaniacore</artifactId>
 			<version>2.0-SNAPSHOT</version>
 		</dependency>
+
 		<!-- Bukkit -->
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
-			<version>1.1-R2-SNAPSHOT</version>
+			<version>1.1-R4-SNAPSHOT</version>
 		</dependency>
 
 		<!-- CraftBukkit -->
 		<dependency>
 			<groupId>org.bukkit</groupId>
 			<artifactId>craftbukkit</artifactId>
-			<version>1.1-R2-SNAPSHOT</version>
+			<version>1.1-R4-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
