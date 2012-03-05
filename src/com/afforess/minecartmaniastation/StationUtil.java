@@ -7,6 +7,7 @@ import org.bukkit.util.Vector;
 import com.afforess.minecartmaniacore.config.ControlBlockList;
 import com.afforess.minecartmaniacore.config.LocaleParser;
 import com.afforess.minecartmaniacore.minecart.MinecartManiaMinecart;
+import com.afforess.minecartmaniacore.event.MinecartIntersectionEvent;
 import com.afforess.minecartmaniacore.utils.DirectionUtils;
 import com.afforess.minecartmaniacore.utils.DirectionUtils.CompassDirection;
 import com.afforess.minecartmaniacore.utils.MinecartUtils;
@@ -30,7 +31,9 @@ public class StationUtil {
         return (Boolean) MinecartManiaWorld.getConfigurationValue("StationCommandSavesAfterUse");
     }
     
-    public static boolean shouldPromptUser(final MinecartManiaMinecart minecart) {
+    // (Etsija) When minecart has a passenger, but the intersection
+    //          is totally controlled by signs, do NOT prompt the passenger
+    public static boolean shouldPromptUser(final MinecartManiaMinecart minecart, final MinecartIntersectionEvent event) {
         if (isNeverIntersectionPrompt() && (minecart.getDataValue("Prompt Override") == null))
             return false;
         else {
@@ -41,6 +44,9 @@ public class StationUtil {
         if (isStationIntersectionPrompt()) {
             if (!ControlBlockList.isValidStationBlock(minecart))
                 return false;
+            // (Etsija) Player is riding in the minecart, but the intersection is already handled by signs - so do not prompt
+            if (event.isActionTaken())
+            	return false;
         }
         
         return true;
