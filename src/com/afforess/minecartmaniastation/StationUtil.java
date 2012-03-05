@@ -78,13 +78,14 @@ public class StationUtil {
     public static Vector alterMotionFromDirection(final DirectionUtils.CompassDirection direction, final Vector oldVelocity) {
         final double speed = Math.abs(oldVelocity.getX()) > Math.abs(oldVelocity.getZ()) ? Math.abs(oldVelocity.getX()) : Math.abs(oldVelocity.getZ());
         
-        if (direction.equals(DirectionUtils.CompassDirection.NORTH))
-            return new Vector(-speed, 0, 0);
-        if (direction.equals(DirectionUtils.CompassDirection.SOUTH))
-            return new Vector(speed, 0, 0);
-        if (direction.equals(DirectionUtils.CompassDirection.EAST))
-            return new Vector(0, 0, -speed);
+        // (Etsija) Directionality fix
         if (direction.equals(DirectionUtils.CompassDirection.WEST))
+            return new Vector(-speed, 0, 0);
+        if (direction.equals(DirectionUtils.CompassDirection.EAST))
+            return new Vector(speed, 0, 0);
+        if (direction.equals(DirectionUtils.CompassDirection.NORTH))
+            return new Vector(0, 0, -speed);
+        if (direction.equals(DirectionUtils.CompassDirection.SOUTH))
             return new Vector(0, 0, speed);
         
         return null;
