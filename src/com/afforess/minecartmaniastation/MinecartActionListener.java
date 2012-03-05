@@ -117,9 +117,7 @@ public class MinecartActionListener extends MinecartManiaListener {
             event.setActionTaken(true);
             return;
         }
-        
-        // (Etsija) Directionality fix
-        final CompassDirection facingDir = DirectionUtils.getDirectionFromMinecartRotation((minecart.minecart.getPassenger().getLocation().getYaw()) % 360.0F);
+        final CompassDirection facingDir = DirectionUtils.getDirectionFromMinecartRotation((minecart.minecart.getPassenger().getLocation().getYaw() - 90.0F) % 360.0F);
         
         Vector velocity = (Vector) minecart.getDataValue("preintersection velocity");
         if (velocity == null)
