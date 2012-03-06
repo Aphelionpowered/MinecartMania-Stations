@@ -7,6 +7,7 @@ import org.bukkit.util.Vector;
 import com.afforess.minecartmaniacore.config.ControlBlockList;
 import com.afforess.minecartmaniacore.config.LocaleParser;
 import com.afforess.minecartmaniacore.minecart.MinecartManiaMinecart;
+import com.afforess.minecartmaniacore.event.MinecartIntersectionEvent;
 import com.afforess.minecartmaniacore.utils.DirectionUtils;
 import com.afforess.minecartmaniacore.utils.DirectionUtils.CompassDirection;
 import com.afforess.minecartmaniacore.utils.MinecartUtils;
@@ -30,7 +31,9 @@ public class StationUtil {
         return (Boolean) MinecartManiaWorld.getConfigurationValue("StationCommandSavesAfterUse");
     }
     
-    public static boolean shouldPromptUser(final MinecartManiaMinecart minecart) {
+    // (Etsija) When minecart has a passenger, but the intersection
+    //          is totally controlled by signs, do NOT prompt the passenger
+    public static boolean shouldPromptUser(final MinecartManiaMinecart minecart, final MinecartIntersectionEvent event) {
         if (isNeverIntersectionPrompt() && (minecart.getDataValue("Prompt Override") == null))
             return false;
         else {
@@ -41,6 +44,9 @@ public class StationUtil {
         if (isStationIntersectionPrompt()) {
             if (!ControlBlockList.isValidStationBlock(minecart))
                 return false;
+            // (Etsija) Player is riding in the minecart, but the intersection is already handled by signs - so do not prompt
+            if (event.isActionTaken())
+            	return false;
         }
         
         return true;
@@ -78,13 +84,14 @@ public class StationUtil {
     public static Vector alterMotionFromDirection(final DirectionUtils.CompassDirection direction, final Vector oldVelocity) {
         final double speed = Math.abs(oldVelocity.getX()) > Math.abs(oldVelocity.getZ()) ? Math.abs(oldVelocity.getX()) : Math.abs(oldVelocity.getZ());
         
-        if (direction.equals(DirectionUtils.CompassDirection.NORTH))
-            return new Vector(-speed, 0, 0);
-        if (direction.equals(DirectionUtils.CompassDirection.SOUTH))
-            return new Vector(speed, 0, 0);
-        if (direction.equals(DirectionUtils.CompassDirection.EAST))
-            return new Vector(0, 0, -speed);
+        // (Etsija) Directionality fix
         if (direction.equals(DirectionUtils.CompassDirection.WEST))
+            return new Vector(-speed, 0, 0);
+        if (direction.equals(DirectionUtils.CompassDirection.EAST))
+            return new Vector(speed, 0, 0);
+        if (direction.equals(DirectionUtils.CompassDirection.NORTH))
+            return new Vector(0, 0, -speed);
+        if (direction.equals(DirectionUtils.CompassDirection.SOUTH))
             return new Vector(0, 0, speed);
         
         return null;
