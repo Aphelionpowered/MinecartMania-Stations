@@ -61,7 +61,7 @@ public class MinecartActionListener extends MinecartManiaListener {
             SignCommands.processStation(event);
         }
         
-        if (StationUtil.shouldPromptUser(minecart)) {
+        if (StationUtil.shouldPromptUser(minecart, event)) {
             
             minecart.setDataValue("preintersection velocity", minecart.minecart.getVelocity().clone());
             minecart.stopCart();
@@ -117,7 +117,8 @@ public class MinecartActionListener extends MinecartManiaListener {
             event.setActionTaken(true);
             return;
         }
-        final CompassDirection facingDir = DirectionUtils.getDirectionFromMinecartRotation((minecart.minecart.getPassenger().getLocation().getYaw() - 90.0F) % 360.0F);
+        // (Etsija) Directionality fix
+        final CompassDirection facingDir = DirectionUtils.getDirectionFromMinecartRotation((minecart.minecart.getPassenger().getLocation().getYaw() - 180.0F) % 360.0F);
         
         Vector velocity = (Vector) minecart.getDataValue("preintersection velocity");
         if (velocity == null)
