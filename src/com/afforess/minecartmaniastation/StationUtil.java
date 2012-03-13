@@ -6,8 +6,8 @@ import org.bukkit.util.Vector;
 
 import com.afforess.minecartmaniacore.config.ControlBlockList;
 import com.afforess.minecartmaniacore.config.LocaleParser;
-import com.afforess.minecartmaniacore.minecart.MinecartManiaMinecart;
 import com.afforess.minecartmaniacore.event.MinecartIntersectionEvent;
+import com.afforess.minecartmaniacore.minecart.MinecartManiaMinecart;
 import com.afforess.minecartmaniacore.utils.DirectionUtils;
 import com.afforess.minecartmaniacore.utils.DirectionUtils.CompassDirection;
 import com.afforess.minecartmaniacore.utils.MinecartUtils;
@@ -46,7 +46,7 @@ public class StationUtil {
                 return false;
             // (Etsija) Player is riding in the minecart, but the intersection is already handled by signs - so do not prompt
             if (event.isActionTaken())
-            	return false;
+                return false;
         }
         
         return true;

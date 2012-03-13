@@ -14,11 +14,13 @@ public class MinecartManiaStation extends JavaPlugin {
     public static PluginDescriptionFile description;
     public static MinecartActionListener listener = new MinecartActionListener();
     
+    @Override
     public void onDisable() {
         // TODO Auto-generated method stub
         
     }
     
+    @Override
     public void onEnable() {
         server = getServer();
         description = getDescription();
